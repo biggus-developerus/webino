@@ -38,7 +38,8 @@ namespace webino::net
         {
             if constexpr (addr_family != AddressFamily::UNSPEC)
                 throw webino::errors::SockError("getaddrinfo failed (POSSIBLE: No address found for the specified family): " + webino::errors::get_err_str(webino::errors::get_errno(true))); 
-            throw webino::errors::SockError("getaddrinfo failed: " + webino::errors::get_err_str(webino::errors::get_errno(true)));
+            else
+                throw webino::errors::SockError("getaddrinfo failed: " + webino::errors::get_err_str(webino::errors::get_errno(true)));
         }
 
         std::vector<LookupRes> addrs;
@@ -64,6 +65,8 @@ namespace webino::net
                     addr = &((struct sockaddr_in*)n->ai_addr)->sin_addr;
                 else if (n->ai_family == AF_INET6)
                     addr = &((struct sockaddr_in6*)n->ai_addr)->sin6_addr;
+                else 
+                    throw webino::errors::WebinoError("Got unknown address family for ai_family");
             }
             else if constexpr (addr_family == AddressFamily::IPV4)
                 addr = &((struct sockaddr_in*)n->ai_addr)->sin_addr;
