@@ -25,6 +25,9 @@ namespace webino::net
             template<typename TOptVal, TOptVal default_val>
             TOptVal get_opt(OptionLevel opt_lvl, Option opt_name)
             {
+                if (this->sfd < 0)
+                    throw webino::errors::SockError("Attempted to get option of an invalid socket");
+                    
                 TOptVal val = default_val;
                 socklen_t val_size = sizeof(TOptVal);
 
