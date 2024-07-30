@@ -22,6 +22,7 @@ namespace webino::net
     {
         TCP = IPPROTO_TCP,
         UDP = IPPROTO_UDP,
+        AUTO = 0,
         ANY = 69420, // USED FOR LOOKUP HINTS
     };
 
