@@ -40,7 +40,7 @@ namespace webino::net
                 throw webino::errors::SockError("getaddrinfo failed (POSSIBLE: No address found for the specified family): " + webino::errors::get_err_str(webino::errors::get_errno(true))); 
             throw webino::errors::SockError("getaddrinfo failed: " + webino::errors::get_err_str(webino::errors::get_errno(true)));
         }
-        
+
         std::vector<LookupRes> addrs;
 
         struct addrinfo* n = res;
@@ -77,7 +77,7 @@ namespace webino::net
             n = n->ai_next;
         }
 
-        freeaddrinfo(res);
+        freeaddrinfo(res); // it'll also free the nodes so all goochie on skib
             
         return addrs;
     }
