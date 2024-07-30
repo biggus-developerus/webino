@@ -1,13 +1,24 @@
 #include <webino/webino.hpp>
 #include <iostream>
 
+using namespace webino;
+
 int main()
 {
     try 
     { 
-        webino::initialise(); 
-        for (auto res: webino::net::lookup<webino::net::AddressFamily::IPV6>("x.com"))
-            std::cout << res.addr << "\n";
+        net::initialise(); 
+        
+        net::ClientSocket<net::AddressFamily::IPV4, net::SocketType::STREAM, net::SocketProtocol::TCP> socket;
+
+        socket.connect(net::lookup<net::AddressFamily::IPV4>("x.com")[0].addr, 80);
+        socket.send("GET / HTTP/1.1\r\nHost: google.com\r\n\r\n", 37);
+        auto [data, size_recved] = socket.recv<char, 1024>();
+
+        std::cout << std::string(data, size_recved) << std::endl;
+        delete[] data;
+
+        socket.close();
     }
     catch (const webino::errors::WebinoError& e) { std::cout << e.what() << std::endl;}
 }
