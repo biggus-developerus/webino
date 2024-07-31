@@ -8,22 +8,22 @@ namespace webino::net
     {
         IPV4 = AF_INET,
         IPV6 = AF_INET6,
-        UNSPEC = AF_UNSPEC, // USED FOR LOOKUP HINTS
+        UNSPEC = AF_UNSPEC, 
+        ANY = 0, // AF_UNSPEC 
     };
 
     enum class SocketType: int
     {
         STREAM = SOCK_STREAM,
         DGRAM = SOCK_DGRAM,
-        ANY = 69420, // USED FOR LOOKUP HINTS
+        ANY = 0,
     };
 
     enum class SocketProtocol: int
     {
         TCP = IPPROTO_TCP,
         UDP = IPPROTO_UDP,
-        AUTO = 0,
-        ANY = 69420, // USED FOR LOOKUP HINTS
+        ANY = 0, 
     };
 
     enum class OptionLevel: int

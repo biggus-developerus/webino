@@ -25,9 +25,12 @@ endif()
 add_library(
     ${PROJECT_NAME}
 
+    ${SRC_DIR}/request.cpp
     ${SRC_DIR}/webino.cpp
 
     ${SRC_DIR}/net/net.cpp
+
+    ${SRC_DIR}/utils/str_utils.cpp
 )
 
 target_precompile_headers(${PROJECT_NAME} PRIVATE ${PCHS})
@@ -35,5 +38,5 @@ target_compile_definitions(${PROJECT_NAME} PRIVATE ${DEFS})
 target_link_libraries(${PROJECT_NAME} PRIVATE ${LIBS})
 target_include_directories(${PROJECT_NAME} PUBLIC ${INC_DIR})
 
-add_executable(${PROJECT_NAME}_NET_TEST tests/net_test.cpp)
+add_executable(${PROJECT_NAME}_NET_TEST tests/webino_test.cpp)
 target_link_libraries(${PROJECT_NAME}_NET_TEST PRIVATE ${PROJECT_NAME})

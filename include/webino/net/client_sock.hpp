@@ -1,5 +1,7 @@
 #pragma once
 
+#include <variant>
+
 #include "enums.hpp"
 
 namespace webino::net
@@ -124,4 +126,10 @@ namespace webino::net
         private:
 
     };
+
+    using TCPSocket = ClientSocket<AddressFamily::IPV4, SocketType::STREAM, SocketProtocol::TCP>;
+    using UDPSocket = ClientSocket<AddressFamily::IPV4, SocketType::DGRAM, SocketProtocol::UDP>;
+    using IPv6TCPSocket = ClientSocket<AddressFamily::IPV6, SocketType::STREAM, SocketProtocol::TCP>;
+    using IPv6UDPSocket = ClientSocket<AddressFamily::IPV6, SocketType::DGRAM, SocketProtocol::UDP>;
+    using SocketVariant = std::variant<TCPSocket, UDPSocket, IPv6TCPSocket, IPv6UDPSocket>;
 }

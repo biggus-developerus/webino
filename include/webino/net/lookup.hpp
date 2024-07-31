@@ -34,7 +34,8 @@ namespace webino::net
         if constexpr(sock_proto != SocketProtocol::ANY)
             hints.ai_protocol = (int)sock_proto;
 
-        if (getaddrinfo(addr.data(), NULL, &hints, &res) != 0)
+        std::string copy = std::string(addr);
+        if (getaddrinfo(copy.data(), NULL, &hints, &res) != 0)
         {
             if constexpr (addr_family != AddressFamily::UNSPEC)
                 throw webino::errors::SockError("getaddrinfo failed (POSSIBLE: No address found for the specified family): " + webino::errors::get_err_str(webino::errors::get_errno(true))); 
