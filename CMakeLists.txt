@@ -25,7 +25,6 @@ endif()
 add_library(
     ${PROJECT_NAME}
 
-    ${SRC_DIR}/request.cpp
     ${SRC_DIR}/webino.cpp
 
     ${SRC_DIR}/net/net.cpp
