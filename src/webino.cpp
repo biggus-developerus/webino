@@ -1,14 +1,2 @@
-#include <webino/webino.hpp>
-
-namespace webino
-{
-    void initialise()
-    {
-        net::initialise();
-    }
-
-    void deinitialise()
-    {
-        net::deinitialise();
-    }
-}
+#include "webino/result.hpp"
+#include "webino/net/net.hpp"
