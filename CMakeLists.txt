@@ -34,5 +34,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ${LIBS})
 target_include_directories(${PROJECT_NAME} PUBLIC ${INC_DIR})
 
 include(add_test)
+
 add_test(logging_test tests/logging_test.cpp)
-add_test(webino_test tests/webino_test.cpp)
+add_test(net_test tests/net_test.cpp)

@@ -1,6 +1,8 @@
 #pragma once
 
+#include "enums.hpp"
 #include "net_necessities.hpp"
+#include "socket.hpp"
 
 #include "webino/result.hpp"
 #include "webino/logging.hpp"
