@@ -1,5 +1,9 @@
 #pragma once
 
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+#include <openssl/evp.h>
+
 #include "enums.hpp"
 #include "net_necessities.hpp"
 #include "socket.hpp"
@@ -15,9 +19,21 @@ namespace webino::net
         static WSADATA _wsa_data;
     #endif
 
+    inline void _deinitialise()
+    {
+        ERR_free_strings();
+        EVP_cleanup();
+    }
+
     inline Result<void*> _initialise()
     {
         if (_initialised) return {ResultCode::SUCCESSFUL, nullptr};
+
+        SSL_load_error_strings();
+        SSL_library_init();
+        OpenSSL_add_all_algorithms();
+
+        atexit(_deinitialise);
 
         #ifdef _WIN32
             int res = WSAStartup(MAKEWORD(WINSOCK_VERSION_MAJOR, WINSOCK_VERSION_MINOR), &_wsa_data);
