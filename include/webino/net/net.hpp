@@ -21,6 +21,7 @@ namespace webino::net
 
     inline void _deinitialise()
     {
+        _free_client_ctx();
         ERR_free_strings();
         EVP_cleanup();
     }
