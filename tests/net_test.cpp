@@ -8,8 +8,7 @@ int main()
     if (!webino::is_successful(webino::initialise()))
         return 1;
 
-    auto result = net::lookup<net::SocketAddressFamily::IPV4, net::SocketType::STREAM, net::SocketProtocol::TCP>("example.com");
-
+    auto result = net::lookup<net::SocketAddressFamily::IPV4, net::SocketType::STREAM, net::SocketProtocol::TCP>("www.google.com");
     if (webino::is_unsuccessful(result))
         return 1;
     
@@ -19,10 +18,10 @@ int main()
     if (webino::is_unsuccessful(sock.connect(addr.address, 443)))
         return 1;
 
-    if (webino::is_unsuccessful(sock.validate_cert("example.com")))
+    if (webino::is_unsuccessful(sock.validate_cert("www.google.com")))
         return 1;
 
-    if (webino::is_unsuccessful(sock.write("GET / HTTP/1.1\r\nHost: example.com\r\n\r\n", 38)))
+    if (webino::is_unsuccessful(sock.write("GET / HTTP/1.1\r\nHost: www.google.com\r\n\r\n", 41)))
         return 1;
 
     char buff[1024] = {0};
@@ -32,7 +31,9 @@ int main()
     sock.close();
 
     std::cout << buff << "\n";
-    webino::net::_deinitialise();
+
+    // webino::net::_free_client_ctx();
+    webino::net::deinitialise();
 
     /*
     webino::get("https://www.google.com", headers, etc);

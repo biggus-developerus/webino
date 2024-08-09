@@ -20,14 +20,14 @@ namespace webino::net
         static WSADATA _wsa_data;
     #endif
 
-    inline void _deinitialise()
+    inline void deinitialise()
     {
         _free_client_ctx();
         ERR_free_strings();
         EVP_cleanup();
     }
 
-    inline Result<void*> _initialise()
+    inline Result<void*> initialise()
     {
         if (_initialised) return {ResultCode::SUCCESSFUL, nullptr};
 
@@ -35,7 +35,7 @@ namespace webino::net
         SSL_library_init();
         OpenSSL_add_ssl_algorithms();
 
-        atexit(_deinitialise);
+        // atexit(_deinitialise);
         
         auto val = _new_ctx();
         if (!is_successful(val))

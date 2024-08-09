@@ -41,12 +41,6 @@ namespace webino::net
             return {ResultCode::UNSUCCESSFUL, {}};
         }
 
-        if (!res)
-        {
-            logging::log_error("what the sigma?? res is still null after getaddrinfo call!!??!?!!!!!!");
-            return {ResultCode::UNSUCCESSFUL, {}}; 
-        }
-
         std::vector<LookupRes<sock_addr_family, sock_type, sock_proto>> addrs;
 
         struct addrinfo* n = res;

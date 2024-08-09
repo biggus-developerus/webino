@@ -25,7 +25,10 @@ namespace webino::net
 
     inline Result<void*> _free_client_ctx()
     {
+        if (!_client_ctx)
+            return {ResultCode::SUCCESSFUL, nullptr};
         SSL_CTX_free(_client_ctx);
+        _client_ctx = nullptr;
         return {ResultCode::SUCCESSFUL, nullptr};
     }
 

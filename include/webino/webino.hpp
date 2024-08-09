@@ -9,7 +9,7 @@ namespace webino
 {
     inline Result<void*> initialise()
     {
-        if (!is_successful(net::_initialise()))
+        if (!is_successful(net::initialise()))
             return {ResultCode::UNSUCCESSFUL, nullptr};
 
         return {ResultCode::SUCCESSFUL, nullptr};
