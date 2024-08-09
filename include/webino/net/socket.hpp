@@ -240,7 +240,9 @@ namespace webino::net
                     return {ResultCode::UNSUCCESSFUL, nullptr};
                 }
 
-                return _validate_cert(cert, domain_name);
+                auto res = _validate_cert(cert, domain_name);
+                X509_free(cert);
+                return res;
             }
 
             inline bool is_valid() { return this->sfd != -1; }
