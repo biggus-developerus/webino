@@ -24,13 +24,14 @@ int main()
     if (webino::is_unsuccessful(sock.write("GET / HTTP/1.1\r\nHost: www.google.com\r\n\r\n", 41)))
         return 1;
 
-    char buff[1024] = {0};
-    if (webino::is_unsuccessful(sock.read(buff, 1024)))
+    char buff[69420] = {0};
+    auto res = sock.read(buff, 69420);
+    if (webino::is_unsuccessful(res))
         return 1;
 
-    sock.close();
+    std::cout << std::string(buff, webino::get_result(res)) << "\n";
 
-    std::cout << buff << "\n";
+    sock.close();
 
     // webino::net::_free_client_ctx();
     webino::net::deinitialise();
