@@ -45,7 +45,7 @@ namespace webino::net
 
         if (!domain_name.empty() && X509_check_host(cert, domain_name.data(), 0, 0, NULL) != 1) 
         {
-            logging::log_warn("Hostname does not match.");
+            logging::log_warn("Domain name '" + domain_name + "' does not match the hostname provided in the server certificate.");
             return {ResultCode::SUCCESSFULISH, nullptr};
         }
 
