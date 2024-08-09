@@ -16,7 +16,7 @@ namespace webino::net
         SocketMode mode, 
         SocketAddressFamily address_family = SocketAddressFamily::IPV4, 
         SocketType socket_type = SocketType::STREAM, 
-        SocketProtocol socket_protocol = SocketProtocol::ANY
+        SocketProtocol socket_protocol = SocketProtocol::TCP
     >
     class Socket
     {

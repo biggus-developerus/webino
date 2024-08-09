@@ -1,13 +1,22 @@
 #include <webino/webino.hpp>
 #include <iostream>
 
+using namespace webino;
+
 int main()
 {
     if (!webino::is_successful(webino::initialise()))
         return 1;
 
-    webino::net::Socket<webino::net::SocketMode::TLS> sock;
-    if (webino::is_unsuccessful(sock.connect("127.0.0.1", 5'000)))
+    auto result = net::lookup<net::SocketAddressFamily::IPV4, net::SocketType::STREAM, net::SocketProtocol::TCP>("example.com");
+
+    if (webino::is_unsuccessful(result))
+        return 1;
+    
+    auto addr = webino::get_result(result)[0];
+    auto sock = addr.make_secure();
+
+    if (webino::is_unsuccessful(sock.connect(addr.address, 443)))
         return 1;
 
     if (webino::is_unsuccessful(sock.validate_cert("example.com")))
@@ -23,8 +32,6 @@ int main()
     sock.close();
 
     std::cout << buff << "\n";
-
-    // webino::net::_free_client_ctx();
     webino::net::_deinitialise();
 
     /*

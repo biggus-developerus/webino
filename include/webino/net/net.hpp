@@ -2,10 +2,11 @@
 
 #include <openssl/ssl.h>
 
+#include "_tls.hpp"
 #include "enums.hpp"
+#include "lookup.hpp"
 #include "net_necessities.hpp"
 #include "socket.hpp"
-#include "_tls.hpp"
 
 #include "webino/result.hpp"
 #include "webino/logging.hpp"

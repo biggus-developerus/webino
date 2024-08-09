@@ -8,15 +8,13 @@ namespace webino::net
     {
         IPV4 = AF_INET,
         IPV6 = AF_INET6,
-        UNSPEC = AF_UNSPEC,
-        ANY = 0,
+        UNSPEC = AF_UNSPEC, // for lookup but we don't handle that shii xd
     };
 
     enum class SocketType
     {
         STREAM = SOCK_STREAM,
         DGRAM = SOCK_DGRAM,
-        ANY = 0,
     };
 
     enum class SocketProtocol
