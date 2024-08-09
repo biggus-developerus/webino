@@ -1,12 +1,11 @@
 #pragma once
 
 #include <openssl/ssl.h>
-#include <openssl/err.h>
-#include <openssl/evp.h>
 
 #include "enums.hpp"
 #include "net_necessities.hpp"
 #include "socket.hpp"
+#include "_tls.hpp"
 
 #include "webino/result.hpp"
 #include "webino/logging.hpp"
@@ -15,6 +14,7 @@
 namespace webino::net
 {
     static bool _initialised = false;
+    
     #ifdef _WIN32
         static WSADATA _wsa_data;
     #endif
@@ -31,9 +31,18 @@ namespace webino::net
 
         SSL_load_error_strings();
         SSL_library_init();
-        OpenSSL_add_all_algorithms();
+        OpenSSL_add_ssl_algorithms();
 
         atexit(_deinitialise);
+        
+        auto val = _new_ctx();
+        if (!is_successful(val))
+        {
+            logging::log_error("Failed to create a new TLS context: " + errors::get_openssl_err_str());
+            return {ResultCode::UNSUCCESSFUL, nullptr};
+        }
+        
+        _client_ctx = get_result(val);
 
         #ifdef _WIN32
             int res = WSAStartup(MAKEWORD(WINSOCK_VERSION_MAJOR, WINSOCK_VERSION_MINOR), &_wsa_data);
@@ -60,4 +69,5 @@ namespace webino::net
 
         return {ResultCode::SUCCESSFUL, nullptr};
     }
+
 }

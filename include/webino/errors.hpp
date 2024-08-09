@@ -11,6 +11,8 @@
     #include <cerrno>
 #endif
 
+#include <openssl/err.h>
+
 namespace webino::errors
 {
     inline int get_errno(bool wsa = false)
@@ -21,6 +23,19 @@ namespace webino::errors
             return GetLastError();
         #endif
         return errno;
+    }
+
+    inline int get_openssl_err()
+    {
+        return ERR_get_error();
+    }
+
+    inline std::string get_openssl_err_str(int err = get_openssl_err())
+    {
+        std::string err_str;
+        err_str.resize(256);
+        ERR_error_string_n(err, err_str.data(), err_str.size());
+        return err_str;
     }
 
     inline std::string get_err_str(int err = get_errno())
